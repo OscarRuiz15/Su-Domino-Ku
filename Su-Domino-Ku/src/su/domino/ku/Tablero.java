@@ -1,13 +1,12 @@
 package su.domino.ku;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 public class Tablero extends javax.swing.JFrame {
 
     public static javax.swing.JTextField campos[][];
     ArrayList<String> datos;
-    private int tablero[][];
+    public static int tablero[][];
     private String linea[];
 
     public Tablero() {
@@ -78,6 +77,11 @@ public class Tablero extends javax.swing.JFrame {
         menuAlgoritmo.setText("Algoritmo");
 
         menuAmplitud.setText("Busqueda por Amplitud");
+        menuAmplitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAmplitudActionPerformed(evt);
+            }
+        });
         menuAlgoritmo.add(menuAmplitud);
 
         menuVegas1.setText("Vegas Tipo 1");
@@ -130,17 +134,34 @@ public class Tablero extends javax.swing.JFrame {
             mostrarTablero();
         }
     }//GEN-LAST:event_menuCargarActionPerformed
-    public void mostrarTablero() {
 
+    private void menuAmplitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmplitudActionPerformed
+        Logica logic=new Logica();
+    }//GEN-LAST:event_menuAmplitudActionPerformed
+    public void mostrarTablero() {
+        int aux1=2;
+        int aux2=2;
+        
         for (int i = 0; i < tablero.length; i++) {
+            aux1=2;
             for (int j = 0; j < tablero[0].length; j++) {
                 if (tablero[i][j] != 0) {
                     campos[i][j].setText("" + tablero[i][j]);
                     campos[i][j].setBackground(new java.awt.Color(132, 190, 229));
                 }
                 System.out.print(tablero[i][j] + " ");
+                if(j==aux1){
+                    System.out.print("| ");
+                    aux1+=3;
+                }
             }
-            System.out.println("");
+            if(i==aux2&&i!=8){
+                System.out.println("\n---------------------");
+                aux2+=3;
+            }
+            else{
+                System.out.println("");
+            }
         }
     }
 
