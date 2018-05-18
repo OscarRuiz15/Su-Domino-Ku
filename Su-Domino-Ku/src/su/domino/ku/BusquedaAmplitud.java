@@ -220,21 +220,23 @@ public class BusquedaAmplitud {
 
     //Metodo para poner la ficha en el nodo
     public void agregarFicha(int k, int orientacion) {
+        boolean cuadroLibre = validarCuadro(fichas.get(k), x, y);
         boolean filaLibre = validarFila(fichas.get(k), x, orientacion);
         boolean columnaLibre = validarColumna(fichas.get(k), y, orientacion);
-        System.out.println("Orientacion "+orientacion+" Ficha "+fichas.get(k).getValorA()+":"+fichas.get(k).getValorB());
+        System.out.println("Orientacion " + orientacion + " Ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
+        System.out.println("Validar Cuadro: " + cuadroLibre);
         System.out.println("Validar Fila: " + filaLibre);
         //System.out.println("Validar Columna: " + columnaLibre);
-        
-        if (filaLibre /*&& columnaLibre*/) {
+
+        if (cuadroLibre && filaLibre /*&& columnaLibre*/) {
             Nodo nodo = new Nodo(nodos.size(), padre.getId(), fichas.get(k), x, y, orientacion, false);
             nodos.add(nodo);
-            System.out.println("Guardo en "+x+" "+y+" con orientacion "+orientacion+" la ficha "+fichas.get(k).getValorA()+":"+fichas.get(k).getValorB());
-        }else{
-            System.out.println("NO guardo en "+x+" "+y+" con orientacion "+orientacion+" la ficha "+fichas.get(k).getValorA()+":"+fichas.get(k).getValorB());
+            System.out.println("Guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
+        } else {
+            System.out.println("NO guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
         }
         System.out.println("----------------------------------------------");
-        
+
     }
 
     //Metodo para poner la ficha en el tablero con su orientacion
@@ -275,41 +277,80 @@ public class BusquedaAmplitud {
 
     public boolean validarFila(Ficha ficha, int x, int orientacion) {
         boolean esValida = true;
-        int valorA=0;
-        int valorB=0;
-        
-        if(orientacion==0){
-            valorA=ficha.getValorA();
-            valorB=ficha.getValorB();
+        int valorA = 0;
+        int valorB = 0;
+
+        if (orientacion == 0) {
+            valorA = ficha.getValorA();
+            valorB = ficha.getValorB();
+        } else if (orientacion == 180) {
+            valorA = ficha.getValorB();
+            valorB = ficha.getValorA();
         }
-        else if(orientacion==180){
-            valorA=ficha.getValorB();
-            valorB=ficha.getValorA();
-        }
-        
+
         for (int y = 0; (y < 9) && esValida; y++) {
-            esValida=tablero[x][y]!=valorA && tablero[x+1][y]!=valorB;
+            esValida = tablero[x][y] != valorA && tablero[x + 1][y] != valorB;
         }
-        
+
         return esValida;
     }
 
     public boolean validarColumna(Ficha ficha, int y, int orientacion) {
         boolean esValida = true;
-        int valorA=0;
+        int valorA = 0;
         int valorB = 0;
-        
-        if(orientacion==90){
-            valorA=ficha.getValorA();
-            valorB=ficha.getValorB();
-        }else if(orientacion==270){
-            valorA=ficha.getValorA();
-            valorB=ficha.getValorB();
+
+        if (orientacion == 90) {
+            valorA = ficha.getValorA();
+            valorB = ficha.getValorB();
+        } else if (orientacion == 270) {
+            valorA = ficha.getValorB();
+            valorB = ficha.getValorA();
         }
-        
+
         for (int x = 0; (x < 9) && esValida; x++) {
-            esValida=tablero[x][y]!=valorA && tablero[x][y+1]!=valorB;
+            esValida = tablero[x][y] != valorA && tablero[x][y + 1] != valorB;
         }
         return esValida;
+    }
+
+    public boolean validarCuadro(Ficha ficha, int fila, int columna) {
+        boolean esValido = true;
+        int valorA = ficha.getValorA();
+        int valorB = ficha.getValorB();
+        int minimo_fila;
+        int maximo_fila;
+        int minimo_columna;
+        int maximo_columna;
+
+        if (fila >= 0 && fila < 3) {
+            minimo_fila = 0;
+            maximo_fila = 2;
+        } else if (fila >= 3 && fila < 6) {
+            minimo_fila = 3;
+            maximo_fila = 5;
+        } else {
+            minimo_fila = 6;
+            maximo_fila = 8;
+        }
+
+        if (columna >= 0 && columna < 3) {
+            minimo_columna = 0;
+            maximo_columna = 2;
+        } else if (columna >= 3 && columna < 6) {
+            minimo_columna = 3;
+            maximo_columna = 5;
+        } else {
+            minimo_columna = 6;
+            maximo_columna = 8;
+        }
+
+        for (int f = minimo_fila; (f <= maximo_fila) && esValido; f++) {
+            for (int c = minimo_columna; (c <= maximo_columna) && esValido; c++) {
+                esValido = tablero[f][c] != valorA && tablero[f][c] != valorB;
+            }
+        }
+
+        return esValido;
     }
 }
