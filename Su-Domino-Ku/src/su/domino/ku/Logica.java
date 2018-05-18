@@ -38,7 +38,6 @@ public class Logica {
 
     public void inicializarTablero() {
         tablero = tablerito.tablero;
-        
     }
 
     public void verTodo() {
