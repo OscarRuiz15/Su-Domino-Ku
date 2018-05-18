@@ -64,14 +64,6 @@ public class BusquedaAmplitud {
                                     agregarFicha(k, 0);
 
                                 }
-                                //Cuando la orientacion es 90 grados
-                                if (cont < orientacionesDisponibles.size() && orientacionesDisponibles.get(cont) == 90) {
-//                                tablero[x][y] = fichas.get(k).getValorA();
-//                                tablero[x][y + 1] = fichas.get(k).getValorB();
-                                    cont++;
-////                                verTablero();
-                                    agregarFicha(k, 90);
-                                }
                                 //Cuando la orientacion es 180 grados
                                 if (cont < orientacionesDisponibles.size() && orientacionesDisponibles.get(cont) == 180) {
 //                                tablero[x][y] = fichas.get(k).getValorB();
@@ -79,6 +71,14 @@ public class BusquedaAmplitud {
                                     cont++;
 //                                verTablero();
                                     agregarFicha(k, 180);
+                                }
+                                //Cuando la orientacion es 90 grados
+                                if (cont < orientacionesDisponibles.size() && orientacionesDisponibles.get(cont) == 90) {
+//                                tablero[x][y] = fichas.get(k).getValorA();
+//                                tablero[x][y + 1] = fichas.get(k).getValorB();
+                                    cont++;
+////                                verTablero();
+                                    agregarFicha(k, 90);
                                 }
                                 //Cuando la orientacion es 270 grados
                                 if (cont < orientacionesDisponibles.size() && orientacionesDisponibles.get(cont) == 270) {
@@ -157,8 +157,8 @@ public class BusquedaAmplitud {
 //////                borde = true;
 //////            }
             if (fila == 8 && col == 0 && tablero[fila][col + 1] == 0) {
-                orientacionesDisponibles.add(270);
                 orientacionesDisponibles.add(90);
+                orientacionesDisponibles.add(270);
                 borde = true;
             }
         }
@@ -176,8 +176,9 @@ public class BusquedaAmplitud {
 //                orientacionesDisponibles.add(180);
 //            }
             if (col < 8 && tablero[fila][col + 1] == 0) {
-                orientacionesDisponibles.add(270);
                 orientacionesDisponibles.add(90);
+                orientacionesDisponibles.add(270);
+                
             }
         }
         return orientacionesDisponibles;
@@ -220,15 +221,15 @@ public class BusquedaAmplitud {
 
     //Metodo para poner la ficha en el nodo
     public void agregarFicha(int k, int orientacion) {
-        boolean cuadroLibre = validarCuadro(fichas.get(k), x, y);
+        //boolean cuadroLibre = validarCuadro(fichas.get(k), x, y);
         boolean filaLibre = validarFila(fichas.get(k), x, orientacion);
         boolean columnaLibre = validarColumna(fichas.get(k), y, orientacion);
         System.out.println("Orientacion " + orientacion + " Ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
-        System.out.println("Validar Cuadro: " + cuadroLibre);
+        //System.out.println("Validar Cuadro: " + cuadroLibre);
         System.out.println("Validar Fila: " + filaLibre);
-        //System.out.println("Validar Columna: " + columnaLibre);
+        System.out.println("Validar Columna: " + columnaLibre);
 
-        if (cuadroLibre && filaLibre /*&& columnaLibre*/) {
+        if (/*cuadroLibre &&*/ filaLibre && columnaLibre) {
             Nodo nodo = new Nodo(nodos.size(), padre.getId(), fichas.get(k), x, y, orientacion, false);
             nodos.add(nodo);
             System.out.println("Guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
@@ -247,16 +248,16 @@ public class BusquedaAmplitud {
                 tablero[x + 1][y] = ficha.getValorB();
                 break;
             case 90:
-                tablero[x][y] = ficha.getValorA();
-                tablero[x][y + 1] = ficha.getValorB();
+                tablero[x][y] = ficha.getValorB();
+                tablero[x][y + 1] = ficha.getValorA();
                 break;
             case 180:
                 tablero[x][y] = ficha.getValorB();
                 tablero[x + 1][y] = ficha.getValorA();
                 break;
             case 270:
-                tablero[x][y] = ficha.getValorB();
-                tablero[x][y + 1] = ficha.getValorA();
+                tablero[x][y] = ficha.getValorA();
+                tablero[x][y + 1] = ficha.getValorB();
                 break;
             default:
                 break;
@@ -287,9 +288,18 @@ public class BusquedaAmplitud {
             valorA = ficha.getValorB();
             valorB = ficha.getValorA();
         }
+        else{
+            valorA = ficha.getValorA();
+            valorB = ficha.getValorB();
+        }
 
         for (int y = 0; (y < 9) && esValida; y++) {
-            esValida = tablero[x][y] != valorA && tablero[x + 1][y] != valorB;
+            if(orientacion==0 || orientacion==180){
+                esValida = tablero[x][y] != valorA && tablero[x + 1][y] != valorB;
+            }
+            if(orientacion==90 || orientacion==270){
+             esValida = tablero[x][y] != valorA && tablero[x][y] != valorB;   
+            }
         }
 
         return esValida;
@@ -301,15 +311,23 @@ public class BusquedaAmplitud {
         int valorB = 0;
 
         if (orientacion == 90) {
-            valorA = ficha.getValorA();
-            valorB = ficha.getValorB();
-        } else if (orientacion == 270) {
             valorA = ficha.getValorB();
             valorB = ficha.getValorA();
+        } else if (orientacion == 270) {
+            valorA = ficha.getValorA();
+            valorB = ficha.getValorB();
+        }else{
+            valorA = ficha.getValorA();
+            valorB = ficha.getValorB();
         }
 
         for (int x = 0; (x < 9) && esValida; x++) {
-            esValida = tablero[x][y] != valorA && tablero[x][y + 1] != valorB;
+            if(orientacion==0 || orientacion==180){
+                esValida = tablero[x][y] != valorA && tablero[x][y] != valorB;
+            }
+            if(orientacion==90 || orientacion==270){
+             esValida = tablero[x][y] != valorA && tablero[x][y+1] != valorB;   
+            }
         }
         return esValida;
     }
@@ -353,4 +371,5 @@ public class BusquedaAmplitud {
 
         return esValido;
     }
+   
 }
