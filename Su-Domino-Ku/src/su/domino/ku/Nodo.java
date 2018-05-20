@@ -7,6 +7,8 @@ public class Nodo {
     private int x;
     private int y;
     private int orientacion; //0°, 90°, 180°, 270°
+    private int xsiguiente;
+    private int ysiguiente;
     private boolean expandido;
 
     
@@ -69,6 +71,22 @@ public class Nodo {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getXsiguiente() {
+        return xsiguiente;
+    }
+
+    public void setXsiguiente(int xsiguiente) {
+        this.xsiguiente = xsiguiente;
+    }
+
+    public int getYsiguiente() {
+        return ysiguiente;
+    }
+
+    public void setYsiguiente(int ysiguiente) {
+        this.ysiguiente = ysiguiente;
     }
 
     
