@@ -9,11 +9,13 @@ public class BusquedaAmplitud {
     private final int tableroinicial[][];
     int columna[];
     private final List<Ficha> fichas;
-    private List<Nodo> nodos = new ArrayList<>();
+    private final List<Nodo> nodos = new ArrayList<>();
     private Nodo padre;
     private int recorrido;
     private int x = 0;
     private int y = 0;
+    private int fichaspuestas;
+    
     long iteracion = 0;
 
     public BusquedaAmplitud(int[][] tablero, List<Ficha> fichas) {
@@ -42,6 +44,7 @@ public class BusquedaAmplitud {
         while (/*orientacionesDisponibles.size() > 0 && !wait &&*/y < 9) {
 
             recorrido = nodos.size();
+            fichaspuestas++;
             int cont = 0;
 
             for (int i = 0; i < recorrido; i++) {
@@ -62,7 +65,7 @@ public class BusquedaAmplitud {
                     //Poner cada ficha en las orientaciones disponibles de la posicion actual
                     for (int k = 0; k < fichas.size(); k++) {
 
-                        if (!esRepetida(i, padre)) {
+                        if (!esRepetida(k+1, padre)) {
 
                             cont = 0;
                             //Cuando la orientacion es 0 grados
@@ -235,7 +238,7 @@ public class BusquedaAmplitud {
         System.out.println("Iteracion N°: " + iteracion);
         iteracion++;
         System.out.println("Cambio en el Nodo: " + recorrido);
-        iteracion++;
+        System.out.println("Cantidad de Fichas puestas en el nodo: " +fichaspuestas);
         System.out.println("Id Padre: " + padre.getId());
         System.out.println("Orientacion " + orientacion + " Ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
 //        System.out.println("Validar Cuadro: " + cuadroLibre);
@@ -320,6 +323,12 @@ public class BusquedaAmplitud {
 
     public boolean esRepetida(int idficha, Nodo nodo) {
         boolean v;
+        if (nodo.getId()==2) {
+            System.out.println("");
+        }
+        if (nodo.getIdPadre()==2) {
+            System.out.println("");
+        }
         if (nodo.getId() == 0) {
             v = false;
         } else if (nodo.getFicha().getId() == idficha) {
