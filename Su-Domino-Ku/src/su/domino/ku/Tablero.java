@@ -11,6 +11,7 @@ public class Tablero extends javax.swing.JFrame {
 
     public Tablero() {
         initComponents();
+        menuAlgoritmo.setVisible(false);
     }
 
     public void iniciarCampos() {
@@ -85,6 +86,11 @@ public class Tablero extends javax.swing.JFrame {
         menuAlgoritmo.add(menuAmplitud);
 
         menuVegas1.setText("Vegas Tipo 1");
+        menuVegas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVegas1ActionPerformed(evt);
+            }
+        });
         menuAlgoritmo.add(menuVegas1);
 
         menuVegas2.setText("Vegas Tipo 2");
@@ -119,6 +125,7 @@ public class Tablero extends javax.swing.JFrame {
         datos = ca.CargarArchivo();
 
         if (datos.size() > 0) {
+            menuAlgoritmo.setVisible(true);
             int x = 0, y = 1;
             tablero = new int[9][9];
 
@@ -127,7 +134,6 @@ public class Tablero extends javax.swing.JFrame {
                 for (int j = 0; j < linea.length; j++) {
                     tablero[i][j] = Integer.parseInt(linea[j]);
                 }
-
             }
 
             iniciarCampos();
@@ -136,30 +142,33 @@ public class Tablero extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCargarActionPerformed
 
     private void menuAmplitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmplitudActionPerformed
-        Logica logic=new Logica();
+        Logica logic = new Logica(1);
     }//GEN-LAST:event_menuAmplitudActionPerformed
+
+    private void menuVegas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVegas1ActionPerformed
+        Logica logic = new Logica(2);
+    }//GEN-LAST:event_menuVegas1ActionPerformed
     public void mostrarTablero() {
-        int aux1=2;
-        int aux2=2;
-        
+        int aux1 = 2;
+        int aux2 = 2;
+
         for (int i = 0; i < tablero.length; i++) {
-            aux1=2;
+            aux1 = 2;
             for (int j = 0; j < tablero[0].length; j++) {
                 if (tablero[i][j] != 0) {
                     campos[i][j].setText("" + tablero[i][j]);
                     campos[i][j].setBackground(new java.awt.Color(132, 190, 229));
                 }
                 System.out.print(tablero[i][j] + " ");
-                if(j==aux1){
+                if (j == aux1) {
                     System.out.print("| ");
-                    aux1+=3;
+                    aux1 += 3;
                 }
             }
-            if(i==aux2&&i!=8){
+            if (i == aux2 && i != 8) {
                 System.out.println("\n---------------------");
-                aux2+=3;
-            }
-            else{
+                aux2 += 3;
+            } else {
                 System.out.println("");
             }
         }

@@ -7,15 +7,21 @@ public class Logica {
 
     private List<String> secuencia;
     private int tablero[][];
-    
+
     static Tablero tablerito = new Tablero();
     private List<Ficha> fichas;
 
-    public Logica() {
+    public Logica(int op) {
         generarFichas();
         inicializarTablero();
         verTodo();
-        busquedaAmplitud();
+
+        if (op == 1) {
+            busquedaAmplitud();
+        } else if (op == 2) {
+            vegasOne();
+        }
+
     }
 
     public void generarFichas() {
@@ -27,8 +33,6 @@ public class Logica {
                     int s = j + 2;
                     int z = i + 1;
                     Ficha fichita = new Ficha(cont + 1, z, s);
-                    /*String ficha = cont + ";" + z + ";" + s + ";" + "no uso";
-                     System.out.println(ficha);*/
                     fichas.add(fichita);
                     cont++;
                 }
@@ -69,10 +73,13 @@ public class Logica {
     }
 
     public void busquedaAmplitud() {
-        BusquedaAmplitud ba=new BusquedaAmplitud(tablero, fichas);
+        BusquedaAmplitud ba = new BusquedaAmplitud(tablero, fichas);
         ba.busquedaAmplitud();
     }
 
-    
-            
+    public void vegasOne() {
+        VegasOne vegas = new VegasOne(tablero, fichas);
+        vegas.algoritmoVegas();
+    }
+
 }

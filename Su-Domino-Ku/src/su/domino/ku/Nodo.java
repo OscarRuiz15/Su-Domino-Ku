@@ -1,6 +1,7 @@
 package su.domino.ku;
 
 public class Nodo {
+
     private int id;
     private int idPadre;
     private Ficha ficha;
@@ -11,17 +12,15 @@ public class Nodo {
     private int ysiguiente;
     private boolean expandido;
 
-    
-
-    public Nodo(int id, int idPadre, Ficha ficha, int x, int y,int orientacion, boolean expandido) {
+    public Nodo(int id, int idPadre, Ficha ficha, int x, int y, int orientacion, boolean expandido) {
         this.id = id;
         this.idPadre = idPadre;
         this.ficha = ficha;
         this.x = x;
         this.y = y;
         this.expandido = expandido;
-        this.orientacion=orientacion;
-        
+        this.orientacion = orientacion;
+
     }
 
     public int getOrientacion() {
@@ -32,7 +31,6 @@ public class Nodo {
         this.orientacion = orientacion;
     }
 
-    
     public int getId() {
         return id;
     }
@@ -89,8 +87,6 @@ public class Nodo {
         this.ysiguiente = ysiguiente;
     }
 
-    
-
     public boolean isExpandido() {
         return expandido;
     }
@@ -98,5 +94,5 @@ public class Nodo {
     public void setExpandido(boolean expandido) {
         this.expandido = expandido;
     }
-    
+
 }

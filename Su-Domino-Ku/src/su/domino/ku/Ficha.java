@@ -1,20 +1,19 @@
-
 package su.domino.ku;
 
 class Ficha {
+
     private int id; //identificador
     private int valorA; //valor primera mitad de la pieza
     private int valorB; //valor segunda mitad de la pieza
-    
-    
-    public Ficha(){       
+
+    public Ficha() {
     }
 
     public Ficha(int id, int valorA, int valorB) {
         this.id = id;
         this.valorA = valorA;
         this.valorB = valorB;
-        
+
     }
 
     public int getId() {
@@ -41,7 +40,4 @@ class Ficha {
         this.valorB = valorB;
     }
 
-    
-    
-    
 }
