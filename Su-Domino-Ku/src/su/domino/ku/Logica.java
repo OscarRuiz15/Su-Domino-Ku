@@ -78,8 +78,16 @@ public class Logica {
     }
 
     public void vegasOne() {
-        VegasOne vegas = new VegasOne(tablero, fichas);
-        vegas.algoritmoVegas();
+        try {
+            while(true){
+                System.out.println("");
+                VegasOne vegas = new VegasOne(tablero);
+                vegas.algoritmoVegas();
+            }
+        } catch (Exception e) {
+
+        }
+
     }
 
 }

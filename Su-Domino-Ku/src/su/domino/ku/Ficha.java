@@ -1,11 +1,16 @@
 package su.domino.ku;
 
-class Ficha {
+class Ficha implements Cloneable{
 
     private int id; //identificador
     private int valorA; //valor primera mitad de la pieza
     private int valorB; //valor segunda mitad de la pieza
 
+     @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public Ficha() {
     }
 
