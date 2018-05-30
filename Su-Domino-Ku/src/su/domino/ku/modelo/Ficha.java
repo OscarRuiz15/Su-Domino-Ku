@@ -1,6 +1,6 @@
-package su.domino.ku;
+package su.domino.ku.modelo;
 
-class Ficha implements Cloneable{
+public class Ficha implements Cloneable{
 
     private int id; //identificador
     private int valorA; //valor primera mitad de la pieza

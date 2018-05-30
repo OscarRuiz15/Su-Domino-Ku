@@ -1,6 +1,8 @@
-package su.domino.ku;
+package su.domino.ku.frames;
 
+import su.domino.ku.modelo.Logica;
 import java.util.ArrayList;
+import su.domino.ku.CargarArchivo;
 
 public class Tablero extends javax.swing.JFrame {
 
@@ -94,6 +96,11 @@ public class Tablero extends javax.swing.JFrame {
         menuAlgoritmo.add(menuVegas1);
 
         menuVegas2.setText("Vegas Tipo 2");
+        menuVegas2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVegas2ActionPerformed(evt);
+            }
+        });
         menuAlgoritmo.add(menuVegas2);
 
         menuBar.add(menuAlgoritmo);
@@ -148,6 +155,10 @@ public class Tablero extends javax.swing.JFrame {
     private void menuVegas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVegas1ActionPerformed
         Logica logic = new Logica(2);
     }//GEN-LAST:event_menuVegas1ActionPerformed
+
+    private void menuVegas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVegas2ActionPerformed
+        Logica logic = new Logica(3);
+    }//GEN-LAST:event_menuVegas2ActionPerformed
     public void mostrarTablero() {
         int aux1 = 2;
         int aux2 = 2;

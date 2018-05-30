@@ -1,15 +1,16 @@
-package su.domino.ku;
+package su.domino.ku.algoritmos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import su.domino.ku.modelo.Ficha;
 
 public class VegasOne {
 
     private int tablero[][];
     private final int tableroinicial[][];
     int columna[];
-    private final ArrayList<Ficha> fichas=new ArrayList<Ficha>();
+    private final ArrayList<Ficha> fichas = new ArrayList<Ficha>();
     private int y = 0, x = 0;
     Random aleatorio = new Random(System.currentTimeMillis());
 
@@ -18,7 +19,7 @@ public class VegasOne {
         this.tablero = tablero;
         //crearFichas();
         generarFichas();
-        
+
         tableroinicial = new int[9][9];
         columna = tablero[0].clone();
         for (int i = 0; i < tablero.length; i++) {
@@ -89,11 +90,11 @@ public class VegasOne {
                             ponerFichaTablero(orientacion, x, y, fichaAzar);
 
                             for (int i = 0; i < fichas.size(); i++) {
-                                if(fichas.get(i).getId()==fichastemporal.get(posFicha).getId()){
+                                if (fichas.get(i).getId() == fichastemporal.get(posFicha).getId()) {
                                     fichas.remove(i);
                                 }
                             }
-                            
+
                             verTablero();
                             pusoFicha = true;
                         } else {
@@ -248,7 +249,7 @@ public class VegasOne {
 
         for (int f = minimo_fila; (f <= maximo_fila) && esValido; f++) {
             for (int c = minimo_columna; (c <= maximo_columna) && esValido; c++) {
-                esValido = tableroinicial[f][c] != valor;
+                esValido = tablero[f][c] != valor;
             }
         }
 
@@ -298,6 +299,8 @@ public class VegasOne {
         return false;
     }
 
+    
+
     public void verTablero() {
         System.out.println("\nTablero");
         int aux1 = 2;
@@ -321,6 +324,7 @@ public class VegasOne {
         }
     }
 
+    
     public void ponerFichaTablero(int orientacion, int x, int y, Ficha fichaAzar) {
         if (orientacion == 0) {
             tableroinicial[x][y] = fichaAzar.getValorA();
@@ -342,7 +346,7 @@ public class VegasOne {
 
     private void crearFichas() {
         fichas.clear();
-        int cont=1;
+        int cont = 1;
         for (int i = 1; i < 9; i++) {
             for (int j = i + 1; j < 10; j++) {
                 if ((i == 3 && j == 8) || (i == 4 && j == 6) || (i == 3 && j == 5) || (i == 1 && j == 9) || (i == 2 && j == 6) || (i == 1 && j == 3) || (i == 1 && j == 2)
@@ -350,20 +354,20 @@ public class VegasOne {
                         || (i == 7 && j == 9) || (i == 1 && j == 7) || (i == 3 && j == 4) || (i == 5 && j == 8) || (i == 4 && j == 5) || (i == 5 && j == 9) || (i == 3 && j == 6) || (i == 7 && j == 8)) {
 
                 } else {
-                    Ficha nuevaPieza = new Ficha(cont,i, j);
+                    Ficha nuevaPieza = new Ficha(cont, i, j);
                     fichas.add(nuevaPieza);
                     cont++;
                 }
             }
         }
     }
-    
-    public void verFichas(ArrayList<Ficha> fichas){
+
+    public void verFichas(ArrayList<Ficha> fichas) {
         for (int i = 0; i < fichas.size(); i++) {
-            System.out.print("Id: " + fichas.get(i).getId() + " " + fichas.get(i).getValorA() + ":" + fichas.get(i).getValorB()+" - ");
+            System.out.print("Id: " + fichas.get(i).getId() + " " + fichas.get(i).getValorA() + ":" + fichas.get(i).getValorB() + " - ");
         }
     }
-    
+
     public void generarFichas() {
         fichas.clear();
         int cont = 0;

@@ -44,6 +44,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Vegas Tipo 2"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuVegas2ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

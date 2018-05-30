@@ -1,7 +1,9 @@
-package su.domino.ku;
+package su.domino.ku.algoritmos;
 
 import java.util.ArrayList;
 import java.util.List;
+import su.domino.ku.modelo.Ficha;
+import su.domino.ku.modelo.Nodo;
 
 public class BusquedaAmplitud {
 
@@ -35,7 +37,7 @@ public class BusquedaAmplitud {
         padre = nodito;
         nodos.add(nodito);
 
-        while (y < 9) {
+        while (!(padre.getId()!=0 && padre.getXsiguiente()==0&& padre.getYsiguiente()==0)) {
 
             recorrido = nodos.size();
             fichaspuestas++;

@@ -1,4 +1,6 @@
-package su.domino.ku;
+package su.domino.ku.modelo;
+
+import su.domino.ku.modelo.Ficha;
 
 public class Nodo {
 

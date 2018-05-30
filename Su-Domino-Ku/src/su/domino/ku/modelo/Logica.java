@@ -1,7 +1,11 @@
-package su.domino.ku;
+package su.domino.ku.modelo;
 
+import su.domino.ku.algoritmos.VegasOne;
+import su.domino.ku.algoritmos.VegasTwo;
+import su.domino.ku.algoritmos.BusquedaAmplitud;
 import java.util.ArrayList;
 import java.util.List;
+import su.domino.ku.frames.Tablero;
 
 public class Logica {
 
@@ -20,6 +24,8 @@ public class Logica {
             busquedaAmplitud();
         } else if (op == 2) {
             vegasOne();
+        }else if (op==3) {
+            vegasTwo();
         }
 
     }
@@ -88,6 +94,11 @@ public class Logica {
 
         }
 
+    }
+
+    private void vegasTwo() {
+        VegasTwo vt=new VegasTwo(tablero);
+        vt.algoritmoVegas();
     }
 
 }

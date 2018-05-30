@@ -1,5 +1,6 @@
 package su.domino.ku;
 
+import su.domino.ku.frames.Tablero;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
