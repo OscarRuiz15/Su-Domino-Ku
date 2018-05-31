@@ -24,7 +24,7 @@ public class Logica {
             busquedaAmplitud();
         } else if (op == 2) {
             vegasOne();
-        }else if (op==3) {
+        } else if (op == 3) {
             vegasTwo();
         }
 
@@ -84,20 +84,12 @@ public class Logica {
     }
 
     public void vegasOne() {
-        try {
-            while(true){
-                System.out.println("");
-                VegasOne vegas = new VegasOne(tablero);
-                vegas.algoritmoVegas();
-            }
-        } catch (Exception e) {
-
-        }
-
+        VegasOne vegas = new VegasOne(tablero);
+        vegas.algoritmoVegas();
     }
 
     private void vegasTwo() {
-        VegasTwo vt=new VegasTwo(tablero);
+        VegasTwo vt = new VegasTwo(tablero);
         vt.algoritmoVegas();
     }
 

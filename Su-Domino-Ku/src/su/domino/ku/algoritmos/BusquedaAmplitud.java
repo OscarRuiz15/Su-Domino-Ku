@@ -181,9 +181,9 @@ public class BusquedaAmplitud {
         Nodo nodo = new Nodo(nodos.size(), padre.getId(), fichas.get(k), x, y, orientacion, false);
         System.out.println("Iteracion N°: " + iteracion);
         iteracion++;
+        System.out.println("Id Padre: " + padre.getId());
         System.out.println("Cambio en el Nodo: " + recorrido);
         System.out.println("Cantidad de Fichas puestas en el nodo: " + fichaspuestas);
-        System.out.println("Id Padre: " + padre.getId());
         System.out.println("Orientacion " + orientacion + " Ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
 
         if (iteracion == 17039) {
