@@ -4,6 +4,7 @@ import su.domino.ku.algoritmos.VegasOne;
 import su.domino.ku.algoritmos.VegasTwo;
 import su.domino.ku.algoritmos.BusquedaAmplitud;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import su.domino.ku.frames.Tablero;
 
@@ -15,10 +16,21 @@ public class Logica {
     static Tablero tablerito = new Tablero();
     private List<Ficha> fichas;
 
+    Calendar calendario = Calendar.getInstance();
+    int horaInicio, minutosInicio, segundosInicio, horaFin, minutosFin, segundosFin, milisegundosInicio, milisegundosFin;
+    long tiempo, tiempoF;
+
     public Logica(int op) {
         generarFichas();
         inicializarTablero();
         verTodo();
+
+        tiempo = System.currentTimeMillis();
+        calendario = Calendar.getInstance();
+        horaInicio = calendario.get(Calendar.HOUR_OF_DAY);
+        minutosInicio = calendario.get(Calendar.MINUTE);
+        segundosInicio = calendario.get(Calendar.SECOND);
+        milisegundosInicio = calendario.get(Calendar.MILLISECOND);
 
         if (op == 1) {
             busquedaAmplitud();
@@ -27,6 +39,17 @@ public class Logica {
         } else if (op == 3) {
             vegasTwo();
         }
+
+        tiempoF = System.currentTimeMillis();
+        calendario = Calendar.getInstance();
+        horaFin = calendario.get(Calendar.HOUR_OF_DAY);
+        minutosFin = calendario.get(Calendar.MINUTE);
+        segundosFin = calendario.get(Calendar.SECOND);
+        milisegundosFin = calendario.get(Calendar.MILLISECOND);
+
+        System.out.println("Comienzo:\t" + horaInicio + ":" + minutosInicio + ":" + segundosInicio + ":" + milisegundosInicio);
+        System.out.println("Fin:\t\t" + horaFin + ":" + minutosFin + ":" + segundosFin + ":" + milisegundosFin);
+        System.out.println("H:M:S:M " + ((tiempoF - tiempo) / 3600000) + ":" + ((tiempoF - tiempo) / 60000) + ":" + (tiempoF - tiempo) / 1000 + ":" + (tiempoF - tiempo));
 
     }
 
@@ -44,6 +67,7 @@ public class Logica {
                 }
             }
         }
+
     }
 
     public void inicializarTablero() {

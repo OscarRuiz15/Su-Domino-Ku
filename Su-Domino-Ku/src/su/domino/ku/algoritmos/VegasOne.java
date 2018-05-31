@@ -37,6 +37,7 @@ public class VegasOne {
     }
 
     public void algoritmoVegas() {
+
         Nodo nodito = new Nodo(0, 0, null, 0, 0, 0, false);
         padre = nodito;
         nodos.add(nodito);
@@ -93,8 +94,7 @@ public class VegasOne {
             }
         }
 
-        System.exit(0);
-
+        //System.exit(0);
     }
 
     public ArrayList<Integer> cargarOrientaciones(int x, int y) {
