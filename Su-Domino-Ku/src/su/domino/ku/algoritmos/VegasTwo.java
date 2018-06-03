@@ -18,6 +18,8 @@ public class VegasTwo {
     private boolean repite;
     private int y = 0, x = 0;
     Random aleatorio = new Random(System.currentTimeMillis());
+    private int numfichaspuestas=0;
+    private int maxfichaspuestas=0;
 
     public VegasTwo(int[][] tablero) {
         System.out.println("-----------COMIENZO-----------");
@@ -45,18 +47,51 @@ public class VegasTwo {
                 }
                 fichas = (ArrayList<Ficha>) fichasaux.clone();
                 repite = false;
+                numfichaspuestas=0;
             }
             int c[] = encontrarFaltantes();
-            List<Integer> faltantes = numerosFaltantes(c[0], c[1]);
-            Random r = new Random();
-            int numero = (int) (r.nextDouble() * c[2]);
-            List<Ficha> posibles = fichasPosibles(faltantes.get(numero));
-            ponerFicha(faltantes.get(numero), c[0], c[1], posibles);
-            verTablero();
-            if (fichas.isEmpty()) {
-                termino = true;
-            }
+            x = c[0];
+            y = c[1];
+            if (c[2] == 0) {
+                System.out.println("No se puede colocar ningun numero en " + x + "," + y);
+                repite = true;
+            } else {
+                List<Integer> faltantes = numerosFaltantes(x, y);
+                if (faltantes.isEmpty()) {
+                    System.out.println("No encontro numeros faltantes");
+                    repite = true;
+                } else {
+                    Random r = new Random();
+                    int numero = (int) (r.nextDouble() * c[2]);
+                    List<Integer[]> posiciones = posicionesDisponibles(x, y);
+                    r = new Random();
+                    int random = (int) (r.nextDouble() * posiciones.size());
+                    if (posiciones.isEmpty()) {
+                        System.out.println("No encontro posicion");
+                        repite = true;
+                    } else {
+                        int x1 = posiciones.get(random)[0];
+                        int y1 = posiciones.get(random)[1];
+                        List<Integer> faltantesSig = numerosFaltantes(x1, y1);
 
+                        List<Ficha> posibles = fichasPosibles(faltantes.get(numero), faltantesSig);
+                        if (posibles.isEmpty()) {
+                            System.out.println("No encontro ficha");
+                            repite = true;
+                        } else {
+
+                            ponerFicha(faltantes.get(numero), x, y, x1, y1, posibles);
+                            verTablero();
+                        }
+                    }
+                    
+                    if (fichas.isEmpty()) {
+                        termino = true;
+                    }
+                }
+            }
+            System.out.println("Maximo de fichas puestas: "+maxfichaspuestas);
+            System.out.println("");
         }
 
     }
@@ -147,10 +182,18 @@ public class VegasTwo {
                     if (cantidad == 1) {
                         break;
                     }
+                    if (cantidad == 0) {
+                        break;
+
+                    }
                 }
             }
             if (cantidad == 1) {
                 break;
+            }
+            if (cantidad == 0) {
+                break;
+
             }
         }
         casillas[2] = cantidad;
@@ -168,11 +211,15 @@ public class VegasTwo {
         return numeros;
     }
 
-    public List<Ficha> fichasPosibles(int valor) {
+    public List<Ficha> fichasPosibles(int valor, List<Integer> posibles) {
         List<Ficha> fichasposibles = new ArrayList<>();
         for (int i = 0; i < fichas.size(); i++) {
-            if (fichas.get(i).getValorA() == valor || fichas.get(i).getValorB() == valor) {
-                fichasposibles.add(fichas.get(i));
+            for (int j = 0; j < posibles.size(); j++) {
+                if ((fichas.get(i).getValorA() == valor && fichas.get(i).getValorB() == posibles.get(j))
+                        || (fichas.get(i).getValorB() == valor && fichas.get(i).getValorA() == posibles.get(j))) {
+                    fichasposibles.add(fichas.get(i));
+                }
+
             }
 
         }
@@ -184,10 +231,10 @@ public class VegasTwo {
         int aux1 = 2;
         int aux2 = 2;
 
-        for (int i = 0; i < tableroinicial.length; i++) {
+        for (int i = 0; i < tablero.length; i++) {
             aux1 = 2;
-            for (int j = 0; j < tableroinicial[0].length; j++) {
-                System.out.print(tableroinicial[i][j] + " ");
+            for (int j = 0; j < tablero[0].length; j++) {
+                System.out.print(tablero[i][j] + " ");
                 if (j == aux1) {
                     System.out.print("| ");
                     aux1 += 3;
@@ -202,81 +249,65 @@ public class VegasTwo {
         }
     }
 
-    public void ponerFicha(int valor, int x, int y, List<Ficha> ficha) {
+    public void ponerFicha(int valor, int x, int y, int x1, int y1, List<Ficha> ficha) {
         Random r = new Random();
+
+        int valorB;
         int random = (int) (r.nextDouble() * ficha.size());
         Ficha elegida = ficha.get(random);
-        List<Integer[]> posiciones = posicionesDisponibles(x, y, valor, elegida);
-        r = new Random();
-        random = (int) (r.nextDouble() * posiciones.size());
-        if (posiciones.isEmpty()) {
-            System.out.println("No encontro");
-            repite = true;
+        if (elegida.getValorA() == valor) {
+            valorB = elegida.getValorB();
         } else {
-            Integer p[] = posiciones.get(random);
-            tablero[x][y] = valor;
-            tablero[p[0]][p[1]] = p[2];
-            Ficha f = fichasaux.get(elegida.getId() - 1);
-            fichas.remove(f);
+            valorB = elegida.getValorA();
         }
+        tablero[x][y] = valor;
+        tablero[x1][y1] = valorB;
+        numfichaspuestas++;
+        if (numfichaspuestas>maxfichaspuestas) {
+            maxfichaspuestas=numfichaspuestas;
+        }
+        Ficha f = fichasaux.get(elegida.getId() - 1);
+        fichas.remove(f);
+        System.out.println("Se pone la ficha: "+f.getId()+", Valor A: "+f.getValorA()+", Valor B: "+f.getValorB());
+        System.out.println("Se pone en "+x+","+y+": "+valor);
+        System.out.println("Se pone en "+x1+","+y1+": "+valorB);
+        System.out.println("Fichas puestas: "+numfichaspuestas);
+
     }
 
-    public List<Integer[]> posicionesDisponibles(int x, int y, int valor, Ficha ficha) {
+    public List<Integer[]> posicionesDisponibles(int x, int y) {
 
         List<Integer[]> lista = new ArrayList<>();
-        int valorfichaA = ficha.getValorA();
-        int valorfichaB = ficha.getValorB();
         if (x + 1 < 9 && tablero[x + 1][y] == 0) {
-            if (valorfichaA == valor) {
-                Integer p[] = validarValor(x + 1, y, valorfichaB);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            } else {
-                Integer p[] = validarValor(x + 1, y, valorfichaA);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            }
+            Integer p[] = {x + 1, y};
+            lista.add(p);
+
         }
         if (y + 1 < 9 && tablero[x][y + 1] == 0) {
-            if (valorfichaA == valor) {
-                Integer p[] = validarValor(x, y + 1, valorfichaB);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            } else {
-                Integer p[] = validarValor(x, y + 1, valorfichaA);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            }
+            Integer p[] = {x, y + 1};
+            lista.add(p);
+
         }
         if (x - 1 >= 0 && tablero[x - 1][y] == 0) {
-            if (valorfichaA == valor) {
-                Integer p[] = validarValor(x - 1, y, valorfichaB);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            } else {
-                Integer p[] = validarValor(x - 1, y, valorfichaA);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            }
+            Integer p[] = {x - 1, y};
+            lista.add(p);
+
         }
         if (y - 1 >= 0 && tablero[x][y - 1] == 0) {
-            if (valorfichaA == valor) {
-                Integer p[] = validarValor(x, y - 1, valorfichaB);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            } else {
-                Integer p[] = validarValor(x, y - 1, valorfichaA);
-                if (p[2] != 0) {
-                    lista.add(p);
-                }
-            }
+            Integer p[] = {x, y - 1};
+            lista.add(p);
+
+//            if (valorfichaA == valor) {
+//                Integer p[] = validarValor(x, y - 1, valorfichaB);
+//                if (p[2] != 0) {
+//                    lista.add(p);
+//                }
+//            } else {
+//                Integer p[] = validarValor(x, y - 1, valorfichaA);
+//                if (p[2] != 0) {
+//                    lista.add(p);
+//                }
+//            }
         }
         return lista;
     }
