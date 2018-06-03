@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package su.domino.ku.algoritmos;
 
 import java.util.ArrayList;
@@ -10,15 +5,15 @@ import java.util.List;
 import java.util.Random;
 import su.domino.ku.modelo.Ficha;
 
-/**
- *
- * @author Andres Felipe
- */
 public class VegasTwo {
+
     private int tablero[][];
     private final int tableroinicial[][];
     int columna[];
-    private final ArrayList<Ficha> fichas = new ArrayList<Ficha>();
+    private final ArrayList<Ficha> fichasaux = new ArrayList<Ficha>();
+    private ArrayList<Ficha> fichas;
+    private boolean termino;
+    private boolean repite;
     private int y = 0, x = 0;
     Random aleatorio = new Random(System.currentTimeMillis());
 
@@ -27,6 +22,7 @@ public class VegasTwo {
         this.tablero = tablero;
         //crearFichas();
         generarFichas();
+        fichas = (ArrayList<Ficha>) fichasaux.clone();
 
         tableroinicial = new int[9][9];
         columna = tablero[0].clone();
@@ -34,11 +30,21 @@ public class VegasTwo {
             tableroinicial[i] = this.tablero[i].clone();
 
         }
+        termino = false;
+        repite = false;
         verTablero();
     }
 
     public void algoritmoVegas() {
-        for (int i = 0; i < 5; i++) {
+        while (!termino) {
+            if (repite) {
+                for (int i = 0; i < tablero.length; i++) {
+                    tablero[i] = this.tableroinicial[i].clone();
+
+                }
+                fichas=(ArrayList<Ficha>) fichasaux.clone();
+                repite=false;
+            }
             int c[] = encontrarFaltantes();
             List<Integer> faltantes = numerosFaltantes(c[0], c[1]);
             Random r = new Random();
@@ -46,14 +52,14 @@ public class VegasTwo {
             List<Ficha> posibles = fichasPosibles(faltantes.get(numero));
             ponerFicha(faltantes.get(numero), c[0], c[1], posibles);
             verTablero();
+            if (fichas.isEmpty()) {
+                termino=true;
+            }
 
         }
 
-        
-
     }
 
-    
     public boolean validarFila(int valor, int x) {
         boolean esValida = true;
 
@@ -111,7 +117,6 @@ public class VegasTwo {
         return esValido;
     }
 
-    
     public int[] encontrarFaltantes() {
         int casillas[] = new int[3];
         int cantidad = 10;
@@ -138,9 +143,14 @@ public class VegasTwo {
                     } else {
                         casillas[2] = 0;
                     }
+                    if (cantidad == 1) {
+                        break;
+                    }
                 }
             }
-
+            if (cantidad == 1) {
+                break;
+            }
         }
         casillas[2] = cantidad;
         return casillas;
@@ -200,11 +210,13 @@ public class VegasTwo {
         random = (int) (r.nextDouble() * posiciones.size());
         if (posiciones.isEmpty()) {
             System.out.println("No encontro");
+            repite=true;
         } else {
             Integer p[] = posiciones.get(random);
             tablero[x][y] = valor;
             tablero[p[0]][p[1]] = p[2];
-            fichas.remove(elegida.getId() - 1);
+            Ficha f = fichasaux.get(elegida.getId() - 1);
+            fichas.remove(f);
         }
     }
 
@@ -279,14 +291,13 @@ public class VegasTwo {
             posiciones[0] = 0;
             posiciones[1] = 0;
             posiciones[2] = 0;
+            repite=true;
         }
         return posiciones;
     }
 
-    
-
     private void crearFichas() {
-        fichas.clear();
+        fichasaux.clear();
         int cont = 1;
         for (int i = 1; i < 9; i++) {
             for (int j = i + 1; j < 10; j++) {
@@ -296,7 +307,7 @@ public class VegasTwo {
 
                 } else {
                     Ficha nuevaPieza = new Ficha(cont, i, j);
-                    fichas.add(nuevaPieza);
+                    fichasaux.add(nuevaPieza);
                     cont++;
                 }
             }
@@ -310,7 +321,7 @@ public class VegasTwo {
     }
 
     public void generarFichas() {
-        fichas.clear();
+        fichasaux.clear();
         int cont = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -318,12 +329,10 @@ public class VegasTwo {
                     int s = j + 2;
                     int z = i + 1;
                     Ficha fichita = new Ficha(cont + 1, z, s);
-                    fichas.add(fichita);
+                    fichasaux.add(fichita);
                     cont++;
                 }
             }
         }
     }
 }
-
-
