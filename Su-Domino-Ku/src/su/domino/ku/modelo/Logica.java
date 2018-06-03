@@ -21,8 +21,9 @@ public class Logica {
     long tiempo, tiempoF;
 
     public Logica(int op) {
-        generarFichas();
+        //generarFichas();
         inicializarTablero();
+        inicializarFichas();
         verTodo();
 
         tiempo = System.currentTimeMillis();
@@ -51,6 +52,8 @@ public class Logica {
         System.out.println("Fin:\t\t" + horaFin + ":" + minutosFin + ":" + segundosFin + ":" + milisegundosFin);
         System.out.println("H:M:S:M " + ((tiempoF - tiempo) / 3600000) + ":" + ((tiempoF - tiempo) / 60000) + ":" + (tiempoF - tiempo) / 1000 + ":" + (tiempoF - tiempo));
 
+        System.exit(0);
+
     }
 
     public void generarFichas() {
@@ -72,6 +75,10 @@ public class Logica {
 
     public void inicializarTablero() {
         tablero = tablerito.tablero;
+    }
+
+    public void inicializarFichas() {
+        fichas = tablerito.fichas;
     }
 
     public void verTodo() {

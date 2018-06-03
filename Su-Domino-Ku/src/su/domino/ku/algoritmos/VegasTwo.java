@@ -3,14 +3,16 @@ package su.domino.ku.algoritmos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import su.domino.ku.frames.Tablero;
 import su.domino.ku.modelo.Ficha;
 
 public class VegasTwo {
 
+    Tablero tablerito = new Tablero();
     private int tablero[][];
     private final int tableroinicial[][];
     int columna[];
-    private final ArrayList<Ficha> fichasaux = new ArrayList<Ficha>();
+    private ArrayList<Ficha> fichasaux = new ArrayList<Ficha>();
     private ArrayList<Ficha> fichas;
     private boolean termino;
     private boolean repite;
@@ -20,7 +22,6 @@ public class VegasTwo {
     public VegasTwo(int[][] tablero) {
         System.out.println("-----------COMIENZO-----------");
         this.tablero = tablero;
-        //crearFichas();
         generarFichas();
         fichas = (ArrayList<Ficha>) fichasaux.clone();
 
@@ -42,8 +43,8 @@ public class VegasTwo {
                     tablero[i] = this.tableroinicial[i].clone();
 
                 }
-                fichas=(ArrayList<Ficha>) fichasaux.clone();
-                repite=false;
+                fichas = (ArrayList<Ficha>) fichasaux.clone();
+                repite = false;
             }
             int c[] = encontrarFaltantes();
             List<Integer> faltantes = numerosFaltantes(c[0], c[1]);
@@ -53,7 +54,7 @@ public class VegasTwo {
             ponerFicha(faltantes.get(numero), c[0], c[1], posibles);
             verTablero();
             if (fichas.isEmpty()) {
-                termino=true;
+                termino = true;
             }
 
         }
@@ -210,7 +211,7 @@ public class VegasTwo {
         random = (int) (r.nextDouble() * posiciones.size());
         if (posiciones.isEmpty()) {
             System.out.println("No encontro");
-            repite=true;
+            repite = true;
         } else {
             Integer p[] = posiciones.get(random);
             tablero[x][y] = valor;
@@ -291,27 +292,9 @@ public class VegasTwo {
             posiciones[0] = 0;
             posiciones[1] = 0;
             posiciones[2] = 0;
-            repite=true;
+            repite = true;
         }
         return posiciones;
-    }
-
-    private void crearFichas() {
-        fichasaux.clear();
-        int cont = 1;
-        for (int i = 1; i < 9; i++) {
-            for (int j = i + 1; j < 10; j++) {
-                if ((i == 3 && j == 8) || (i == 4 && j == 6) || (i == 3 && j == 5) || (i == 1 && j == 9) || (i == 2 && j == 6) || (i == 1 && j == 3) || (i == 1 && j == 2)
-                        || (i == 4 && j == 8) || (i == 2 && j == 7) || (i == 2 && j == 8) || (i == 5 && j == 6) || (i == 6 && j == 9) || (i == 3 && j == 7) || (i == 1 && j == 6)
-                        || (i == 7 && j == 9) || (i == 1 && j == 7) || (i == 3 && j == 4) || (i == 5 && j == 8) || (i == 4 && j == 5) || (i == 5 && j == 9) || (i == 3 && j == 6) || (i == 7 && j == 8)) {
-
-                } else {
-                    Ficha nuevaPieza = new Ficha(cont, i, j);
-                    fichasaux.add(nuevaPieza);
-                    cont++;
-                }
-            }
-        }
     }
 
     public void verFichas(ArrayList<Ficha> fichas) {
@@ -322,17 +305,18 @@ public class VegasTwo {
 
     public void generarFichas() {
         fichasaux.clear();
-        int cont = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (i < j + 1) {
-                    int s = j + 2;
-                    int z = i + 1;
-                    Ficha fichita = new Ficha(cont + 1, z, s);
-                    fichasaux.add(fichita);
-                    cont++;
-                }
-            }
-        }
+        /*int cont = 0;
+         for (int i = 0; i < 8; i++) {
+         for (int j = 0; j < 8; j++) {
+         if (i < j + 1) {
+         int s = j + 2;
+         int z = i + 1;
+         Ficha fichita = new Ficha(cont + 1, z, s);
+         fichasaux.add(fichita);
+         cont++;
+         }
+         }
+         }*/
+        fichasaux = tablerito.fichas;
     }
 }

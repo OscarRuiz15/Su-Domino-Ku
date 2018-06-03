@@ -3,15 +3,17 @@ package su.domino.ku.algoritmos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import su.domino.ku.frames.Tablero;
 import su.domino.ku.modelo.Ficha;
 import su.domino.ku.modelo.Nodo;
 
 public class VegasOne {
 
+    Tablero tablerito = new Tablero();
     private int tablero[][];
     private final int tableroinicial[][];
     int columna[];
-    private final ArrayList<Ficha> fichas = new ArrayList<Ficha>();
+    private ArrayList<Ficha> fichas = new ArrayList<Ficha>();
     private final List<Nodo> nodos = new ArrayList<>();
     private Nodo padre;
     private int recorrido;
@@ -33,6 +35,8 @@ public class VegasOne {
         for (int i = 0; i < tablero.length; i++) {
             tableroinicial[i] = this.tablero[i].clone();
         }
+
+        verFichas(fichas);
 
     }
 
@@ -359,18 +363,7 @@ public class VegasOne {
 
     public void generarFichas() {
         fichas.clear();
-        int cont = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (i < j + 1) {
-                    int s = j + 2;
-                    int z = i + 1;
-                    Ficha fichita = new Ficha(cont + 1, z, s);
-                    fichas.add(fichita);
-                    cont++;
-                }
-            }
-        }
+        fichas = tablerito.fichas;
     }
 
     public void verFichas(ArrayList<Ficha> fichas) {

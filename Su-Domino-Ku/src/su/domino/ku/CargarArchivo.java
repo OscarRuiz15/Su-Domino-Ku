@@ -11,7 +11,7 @@ public class CargarArchivo {
     public ArrayList CargarArchivo() {
         ArrayList<String> datos = new ArrayList<String>();
         try {
-            String carpeta = "" + System.getProperty("user.dir") + "\\Estados";
+            String carpeta = "" + System.getProperty("user.dir") + "\\Tableros";
             JFileChooser se;
             se = new JFileChooser(carpeta);
             se.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);

@@ -3,6 +3,7 @@ package su.domino.ku.frames;
 import su.domino.ku.modelo.Logica;
 import java.util.ArrayList;
 import su.domino.ku.CargarArchivo;
+import su.domino.ku.modelo.Ficha;
 
 public class Tablero extends javax.swing.JFrame {
 
@@ -10,6 +11,7 @@ public class Tablero extends javax.swing.JFrame {
     ArrayList<String> datos;
     public static int tablero[][];
     private String linea[];
+    public static ArrayList<Ficha> fichas = new ArrayList<Ficha>();
 
     public Tablero() {
         initComponents();
@@ -141,6 +143,14 @@ public class Tablero extends javax.swing.JFrame {
                 for (int j = 0; j < linea.length; j++) {
                     tablero[i][j] = Integer.parseInt(linea[j]);
                 }
+            }
+
+            int cont = 1;
+            for (int i = 11; i < datos.size(); i++) {
+                linea = datos.get(i).split(":");
+                Ficha ficha = new Ficha(cont, Integer.parseInt(linea[0]), Integer.parseInt(linea[1]));
+                fichas.add(ficha);
+                cont++;
             }
 
             iniciarCampos();
