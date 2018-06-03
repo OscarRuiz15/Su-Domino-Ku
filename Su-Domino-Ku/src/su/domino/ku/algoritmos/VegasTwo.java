@@ -20,6 +20,7 @@ public class VegasTwo {
     Random aleatorio = new Random(System.currentTimeMillis());
     private int numfichaspuestas=0;
     private int maxfichaspuestas=0;
+    private int fracasos=0;
 
     public VegasTwo(int[][] tablero) {
         System.out.println("-----------COMIENZO-----------");
@@ -48,6 +49,9 @@ public class VegasTwo {
                 fichas = (ArrayList<Ficha>) fichasaux.clone();
                 repite = false;
                 numfichaspuestas=0;
+                fracasos++;
+                System.out.println("Falle :'c");
+                System.out.println("Fracasos: "+fracasos);
             }
             int c[] = encontrarFaltantes();
             x = c[0];
@@ -271,7 +275,7 @@ public class VegasTwo {
         System.out.println("Se pone la ficha: "+f.getId()+", Valor A: "+f.getValorA()+", Valor B: "+f.getValorB());
         System.out.println("Se pone en "+x+","+y+": "+valor);
         System.out.println("Se pone en "+x1+","+y1+": "+valorB);
-        System.out.println("Fichas puestas: "+numfichaspuestas);
+        System.out.println("Fichas puestas: "+numfichaspuestas+" de "+ fichasaux.size());
 
     }
 
