@@ -21,6 +21,7 @@ public class VegasTwo {
     private int numfichaspuestas=0;
     private int maxfichaspuestas=0;
     private int fracasos=0;
+     private int numfichaspuestastotal=0;
 
     public VegasTwo(int[][] tablero) {
         System.out.println("-----------COMIENZO-----------");
@@ -51,7 +52,7 @@ public class VegasTwo {
                 numfichaspuestas=0;
                 fracasos++;
                 System.out.println("Falle :'c");
-                System.out.println("Fracasos: "+fracasos);
+                
             }
             int c[] = encontrarFaltantes();
             x = c[0];
@@ -95,6 +96,8 @@ public class VegasTwo {
                 }
             }
             System.out.println("Maximo de fichas puestas: "+maxfichaspuestas);
+            System.out.println("Maximo de casillas ocupadas: "+(maxfichaspuestas*2));
+            System.out.println("Fracasos: "+fracasos);
             System.out.println("");
         }
 
@@ -267,15 +270,20 @@ public class VegasTwo {
         tablero[x][y] = valor;
         tablero[x1][y1] = valorB;
         numfichaspuestas++;
+        numfichaspuestastotal++;
         if (numfichaspuestas>maxfichaspuestas) {
             maxfichaspuestas=numfichaspuestas;
         }
         Ficha f = fichasaux.get(elegida.getId() - 1);
         fichas.remove(f);
+        
         System.out.println("Se pone la ficha: "+f.getId()+", Valor A: "+f.getValorA()+", Valor B: "+f.getValorB());
         System.out.println("Se pone en "+x+","+y+": "+valor);
         System.out.println("Se pone en "+x1+","+y1+": "+valorB);
         System.out.println("Fichas puestas: "+numfichaspuestas+" de "+ fichasaux.size());
+        System.out.println("Casillas ocupadas: "+(numfichaspuestas*2));
+        System.out.println("Casillas restantes: "+(fichas.size()*2));
+        System.out.println("Fichas puestas en total: "+numfichaspuestastotal);
 
     }
 

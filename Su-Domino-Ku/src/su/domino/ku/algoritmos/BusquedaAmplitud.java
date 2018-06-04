@@ -35,6 +35,9 @@ public class BusquedaAmplitud {
 
         Nodo nodito = new Nodo(0, 0, null, 0, 0, 0, false);
         padre = nodito;
+        int c[] = siguienteIteracion();
+        nodito.setXsiguiente(c[0]);
+        nodito.setYsiguiente(c[1]);
         nodos.add(nodito);
 
         while (!(padre.getId()!=0 && padre.getXsiguiente()==0&& padre.getYsiguiente()==0)) {
