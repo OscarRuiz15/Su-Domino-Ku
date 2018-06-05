@@ -284,6 +284,11 @@ public class VegasTwo {
         System.out.println("Casillas ocupadas: "+(numfichaspuestas*2));
         System.out.println("Casillas restantes: "+(fichas.size()*2));
         System.out.println("Fichas puestas en total: "+numfichaspuestastotal);
+        if (fracasos!=0) {
+            System.out.println("Fichas puestas en promedio por intento: "+(numfichaspuestastotal/fracasos));
+            System.out.println("Casillas llenadas en promedio por intento: "+((numfichaspuestastotal/fracasos)*2));
+        }
+        
 
     }
 
