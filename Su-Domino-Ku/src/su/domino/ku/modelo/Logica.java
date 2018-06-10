@@ -1,3 +1,6 @@
+//Oscar Alexander Ruiz Palacio 201667600
+//Andres Felipe Medina Tascon  201667602
+//Andres Felipe Gonzalez Rojas 201759599
 package su.domino.ku.modelo;
 
 import su.domino.ku.algoritmos.VegasOne;
@@ -10,16 +13,19 @@ import su.domino.ku.frames.Tablero;
 
 public class Logica {
 
-    private List<String> secuencia;
+    //Tablero
     private int tablero[][];
-
+    
     static Tablero tablerito = new Tablero();
+    //Lista de Fichas
     private List<Ficha> fichas;
 
+    //Variables que permiten calcular el tiempo de ejecucion del algoritmo;
     Calendar calendario = Calendar.getInstance();
     int horaInicio, minutosInicio, segundosInicio, horaFin, minutosFin, segundosFin, milisegundosInicio, milisegundosFin;
     long tiempo, tiempoF;
 
+    //Metodo que elige el algoritmo a usar
     public Logica(int op) {
         //generarFichas();
         inicializarTablero();
@@ -55,7 +61,7 @@ public class Logica {
         System.exit(0);
 
     }
-
+    //Metodo que genera las fichas
     public void generarFichas() {
         fichas = new ArrayList<>();
         int cont = 0;
@@ -108,7 +114,7 @@ public class Logica {
             }
         }
     }
-
+//Se inicializan los algoritmos
     public void busquedaAmplitud() {
         BusquedaAmplitud ba = new BusquedaAmplitud(tablero, fichas);
         ba.busquedaAmplitud();

@@ -1,3 +1,6 @@
+//Oscar Alexander Ruiz Palacio 201667600
+//Andres Felipe Medina Tascon  201667602
+//Andres Felipe Gonzalez Rojas 201759599
 package su.domino.ku;
 
 import java.io.BufferedReader;
@@ -6,6 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 
+//Metodo para cargar el archivo
 public class CargarArchivo {
 
     public ArrayList CargarArchivo() {

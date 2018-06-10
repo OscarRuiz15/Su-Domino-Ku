@@ -1,17 +1,24 @@
+//Oscar Alexander Ruiz Palacio 201667600
+//Andres Felipe Medina Tascon  201667602
+//Andres Felipe Gonzalez Rojas 201759599
 package su.domino.ku.modelo;
 
-import su.domino.ku.modelo.Ficha;
+
 
 public class Nodo {
 
-    private int id;
-    private int idPadre;
-    private Ficha ficha;
+    private int id;//Numero del nodo
+    private int idPadre;//Numero de nodo padre
+    private Ficha ficha;//Ficha puesta en el nodo
+    //Posiciones x,y del nodo
     private int x;
     private int y;
+    //Orientaciones de la ficha
     private int orientacion; //0°, 90°, 180°, 270°
+    //Posiciones x,y libres despues de poner la ficha en el nodo
     private int xsiguiente;
     private int ysiguiente;
+    //Permite conocer si el nodo esta expandido o no
     private boolean expandido;
 
     public Nodo(int id, int idPadre, Ficha ficha, int x, int y, int orientacion, boolean expandido) {

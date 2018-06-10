@@ -1,3 +1,6 @@
+//Oscar Alexander Ruiz Palacio 201667600
+//Andres Felipe Medina Tascon  201667602
+//Andres Felipe Gonzalez Rojas 201759599
 package su.domino.ku.frames;
 
 import su.domino.ku.modelo.Logica;
