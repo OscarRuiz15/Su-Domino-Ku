@@ -1,8 +1,10 @@
-26
-21
-20
-23
-20
-20
-19
-22
+Tablero 1: 23
+Tablero 2: 21
+Tablero 3: 20
+Tablero 4: 23
+Tablero 5: 20
+Tablero 6: 20
+Tablero 7: 19
+Tablero 8: 22
+Tablero 9: 22
+Tablero 10: 24
