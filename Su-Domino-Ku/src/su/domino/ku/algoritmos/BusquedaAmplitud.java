@@ -9,6 +9,7 @@ import su.domino.ku.modelo.Ficha;
 import su.domino.ku.modelo.Nodo;
 
 public class BusquedaAmplitud {
+
     //Tablero 
     private int tablero[][];
     //Tablero auxiliar
@@ -30,25 +31,27 @@ public class BusquedaAmplitud {
     long iteracion = 0;
     //Validaciones
     private Validaciones v;
+
     //Metodo constructor para realizar la busqueda por amplitud
     public BusquedaAmplitud(int[][] tablero, List<Ficha> fichas) {
         this.tablero = tablero;
         this.fichas = fichas;
         tableroinicial = new int[9][9];
-        
+
         for (int i = 0; i < tablero.length; i++) {
             tableroinicial[i] = this.tablero[i].clone();
         }
 
     }
+
     //Realizar la busqueda por amplitud
     //Crea el nodo raiz con el tablero inicial
     //Se detiene cuando las posiciones libres de un nodo sean 0,0 y no sea la raiz
     //Busca las orientaciones disponibles en el x,y libres del nodo
     //Busca las fichas que no esten repetidas en el nodo para ponerlas en el mismo
     //Intenta Poner las fichas en la posicion x,y con sus orientaciones disponibles
-    public void busquedaAmplitud() {
-         v=new Validaciones(tablero, nodos);
+    public int[][] busquedaAmplitud() {
+        v = new Validaciones(tablero, nodos);
         Nodo nodito = new Nodo(0, 0, null, 0, 0, 0, false);
         padre = nodito;
         int c[] = v.siguienteIteracion();
@@ -56,16 +59,15 @@ public class BusquedaAmplitud {
         nodito.setYsiguiente(c[1]);
         nodos.add(nodito);
 
-        while (!(padre.getId()!=0 && padre.getXsiguiente()==0&& padre.getYsiguiente()==0)) {
+        while (!(padre.getId() != 0 && padre.getXsiguiente() == 0 && padre.getYsiguiente() == 0)) {
 
             recorrido = nodos.size();
             fichaspuestas++;
             int cont = 0;
-           
 
             for (int i = 0; i < recorrido; i++) {
                 if (!nodos.get(i).isExpandido()) {
-                    
+
                     padre = nodos.get(i);
                     padre.setExpandido(true);
                     x = padre.getXsiguiente();
@@ -80,12 +82,12 @@ public class BusquedaAmplitud {
 
                     //Poner cada ficha en las orientaciones disponibles de la posicion actual
                     for (int k = 0; k < fichas.size(); k++) {
-                        v=new Validaciones(tablero, nodos);
+                        v = new Validaciones(tablero, nodos);
                         if (!v.esRepetida(k + 1, padre)) {
 
                             cont = 0;
                             //Cuando la orientacion es 0 grados
-                            
+
                             if (cont < orientacionesDisponibles.size() && orientacionesDisponibles.get(cont) == 0) {
                                 cont++;
                                 agregarFicha(k, 0);
@@ -113,15 +115,13 @@ public class BusquedaAmplitud {
                 }
             }
         }
-
+        return tablero;
     }
 
-   
-   
     //Verifica si se puede poner la ficha en el nodo
     //Si puede poner la ficha en el nodo padre crea el nodo
     public void agregarFicha(int k, int orientacion) {
-        v=new Validaciones(tablero, nodos);
+        v = new Validaciones(tablero, nodos);
         Nodo nodo = new Nodo(nodos.size(), padre.getId(), fichas.get(k), x, y, orientacion, false);
         System.out.println("Iteracion N°: " + iteracion);
         iteracion++;
@@ -130,19 +130,23 @@ public class BusquedaAmplitud {
         System.out.println("Cantidad de Fichas puestas en el nodo: " + fichaspuestas);
         System.out.println("Orientacion " + orientacion + " Ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
 
-     
         if (v.ponerNodo(nodo)) {
             v.verTablero();
             int siguientes[] = v.siguienteIteracion();
             nodo.setXsiguiente(siguientes[0]);
             nodo.setYsiguiente(siguientes[1]);
             nodos.add(nodo);
-            tablero = tableroinicial.clone();
-            for (int i = 0; i < tablero.length; i++) {
-                tablero[i] = tableroinicial[i].clone();
+            
+            if (siguientes[0] ==siguientes[1] &&!(siguientes[0] == 0 && siguientes[1] == 0)) {
+                
+                for (int i = 0; i < tablero.length; i++) {
+                    tablero[i] = tableroinicial[i].clone();
 
+                }
+                System.gc();
             }
-            System.gc();
+            
+
             System.out.println("Guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
         } else {
             System.out.println("NO guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + fichas.get(k).getValorA() + ":" + fichas.get(k).getValorB());
@@ -156,7 +160,6 @@ public class BusquedaAmplitud {
 
     }
 
-    
     //Verifica si una ficha esta ´puesta en el nodo
     //Retorna verdadero si ya existe en el arbol
 //    public boolean esRepetida(int idficha, Nodo nodo) {

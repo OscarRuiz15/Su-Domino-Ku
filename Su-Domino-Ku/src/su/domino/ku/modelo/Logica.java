@@ -25,7 +25,7 @@ public class Logica {
     int horaInicio, minutosInicio, segundosInicio, horaFin, minutosFin, segundosFin, milisegundosInicio, milisegundosFin;
     long tiempo, tiempoF;
 
-    //Metodo que elige el algoritmo a usar
+    //Metodo que elige el algoritmo a usar y mostrar su tiempo de ejecucion
     public Logica(int op) {
         //generarFichas();
         inicializarTablero();
@@ -58,7 +58,7 @@ public class Logica {
         System.out.println("Fin:\t\t" + horaFin + ":" + minutosFin + ":" + segundosFin + ":" + milisegundosFin);
         System.out.println("H:M:S:M " + ((tiempoF - tiempo) / 3600000) + ":" + ((tiempoF - tiempo) / 60000) + ":" + (tiempoF - tiempo) / 1000 + ":" + (tiempoF - tiempo));
 
-        System.exit(0);
+        //System.exit(0);
 
     }
     //Metodo que genera las fichas
@@ -117,17 +117,17 @@ public class Logica {
 //Se inicializan los algoritmos
     public void busquedaAmplitud() {
         BusquedaAmplitud ba = new BusquedaAmplitud(tablero, fichas);
-        ba.busquedaAmplitud();
+        tablero=ba.busquedaAmplitud();
     }
 
     public void vegasOne() {
         VegasOne vegas = new VegasOne(tablero);
-        vegas.algoritmoVegas();
+        tablero=vegas.algoritmoVegas();
     }
 
     private void vegasTwo() {
         VegasTwo vt = new VegasTwo(tablero);
-        vt.algoritmoVegas();
+        tablero=vt.algoritmoVegas();
     }
 
 }

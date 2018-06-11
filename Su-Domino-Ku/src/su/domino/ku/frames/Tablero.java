@@ -5,6 +5,7 @@ package su.domino.ku.frames;
 
 import su.domino.ku.modelo.Logica;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import su.domino.ku.CargarArchivo;
 import su.domino.ku.modelo.Ficha;
 
@@ -135,6 +136,7 @@ public class Tablero extends javax.swing.JFrame {
     private void menuCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCargarActionPerformed
         CargarArchivo ca = new CargarArchivo();
         datos = ca.CargarArchivo();
+        fichas.clear();
 
         if (datos.size() > 0) {
             menuAlgoritmo.setVisible(true);
@@ -163,14 +165,20 @@ public class Tablero extends javax.swing.JFrame {
 
     private void menuAmplitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmplitudActionPerformed
         Logica logic = new Logica(1);
+        mostrarTablero();
+        JOptionPane.showMessageDialog(this, "Encontre solucion :)");
     }//GEN-LAST:event_menuAmplitudActionPerformed
 
     private void menuVegas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVegas1ActionPerformed
         Logica logic = new Logica(2);
+        mostrarTablero();
+        JOptionPane.showMessageDialog(this, "Encontre solucion :)");
     }//GEN-LAST:event_menuVegas1ActionPerformed
 
     private void menuVegas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVegas2ActionPerformed
         Logica logic = new Logica(3);
+        mostrarTablero();
+        JOptionPane.showMessageDialog(this, "Encontre solucion :)");
     }//GEN-LAST:event_menuVegas2ActionPerformed
     public void mostrarTablero() {
         int aux1 = 2;

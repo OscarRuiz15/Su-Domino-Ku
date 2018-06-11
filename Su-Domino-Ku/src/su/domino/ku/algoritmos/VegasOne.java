@@ -54,12 +54,20 @@ public class VegasOne {
         verFichas(fichas);
 
     }
+    
+    //Realizar la busqueda por amplitud
+    //Crea el nodo raiz con el tablero inicial
+    //Se detiene cuando las posiciones libres de un nodo sean 0,0 y no sea la raiz
+    //Busca las orientaciones disponibles en el x,y libres del nodo
+    //Busca las fichas que no esten repetidas en el nodo para ponerlas en el mismo
+    //Intenta Poner las fichas aleatorias en la posicion x,y con sus orientaciones disponibles de forma aleatoria
 
-    public void algoritmoVegas() {
+    public int[][] algoritmoVegas() {
         v=new Validaciones(tablero, nodos);
         Nodo nodito = new Nodo(0, 0, null, 0, 0, 0, false);
         padre = nodito;
         int c[] = v.siguienteIteracion();
+        
         nodito.setXsiguiente(c[0]);
         nodito.setYsiguiente(c[1]);
         nodos.add(nodito);
@@ -79,6 +87,7 @@ public class VegasOne {
                     y = padre.getYsiguiente();
 
                     ArrayList<Ficha> fichastemporal = new ArrayList();
+                    //SE CREA UNA COPIA DE LAS FICHAS PARA RECORRERLAS Y ELEGIRLAS DE MANERA ALEATORIA
                     fichastemporal = (ArrayList<Ficha>) fichas.clone();
 
                     System.out.println("============================================================");
@@ -100,6 +109,7 @@ public class VegasOne {
                         System.out.println("\n\nFicha elegida al azar: " + fichaAux.getValorA() + ":" + fichaAux.getValorB());
                         v=new Validaciones(tablero, nodos);
                         if (!v.esRepetida(fichaAux.getId(), padre)) {
+                             //SE RECORRE LAS ORIENTACIONES DISPONIBLES Y SE ELIGEN DE MANERA ALEATORIA
                             while (orientacionesDisponibles.size() > 0) {
                                 aleatorio = new Random(System.currentTimeMillis());
                                 posOrientacion = aleatorio.nextInt(orientacionesDisponibles.size());
@@ -117,10 +127,12 @@ public class VegasOne {
                 }
             }
         }
-
+        return tablero;
         //System.exit(0);
     }
-    //Metodo para poner la ficha en el nodo
+    
+    //Verifica si se puede poner la ficha en el nodo
+    //Si puede poner la ficha en el nodo padre crea el nodo
     public void agregarFicha(Ficha ficha, int orientacion) {
         v=new Validaciones(tablero, nodos);
         Nodo nodo = new Nodo(nodos.size(), padre.getId(), ficha, x, y, orientacion, false);
@@ -138,12 +150,14 @@ public class VegasOne {
             nodo.setXsiguiente(siguientes[0]);
             nodo.setYsiguiente(siguientes[1]);
             nodos.add(nodo);
-            tablero = tableroinicial.clone();
-            for (int i = 0; i < tablero.length; i++) {
-                tablero[i] = tableroinicial[i].clone();
+            if (siguientes[0] ==siguientes[1] &&!(siguientes[0] == 0 && siguientes[1] == 0)) {
+                for (int i = 0; i < tablero.length; i++) {
+                    tablero[i] = tableroinicial[i].clone();
 
+                }
+                System.gc();
             }
-            System.gc();
+            
             System.out.println("Guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + ficha.getValorA() + ":" + ficha.getValorB());
         } else {
             System.out.println("NO guardo en " + x + " " + y + " con orientacion " + orientacion + " la ficha " + ficha.getValorA() + ":" + ficha.getValorB());
@@ -158,13 +172,15 @@ public class VegasOne {
     }
 
    
-
+//Genera las fichas de acuerdo a las disponibles a usar en el tablero cargado
+    //Estas fichas se cargan por defecto desde el archivo de texto
 
     public void generarFichas() {
         fichas.clear();
         fichas = tablerito.fichas;
     }
 
+    //Metodo para imprimir las fichas
     public void verFichas(ArrayList<Ficha> fichas) {
         for (int i = 0; i < fichas.size(); i++) {
             System.out.print("Id: " + fichas.get(i).getId() + " -> " + fichas.get(i).getValorA() + ":" + fichas.get(i).getValorB() + " - ");

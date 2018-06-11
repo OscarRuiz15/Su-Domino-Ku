@@ -74,7 +74,7 @@ public class VegasTwo {
     //Se pone la ficha
     //Se quita la ficha de las que estan disponibles
     //Si no existen fichas disponibles la condicion de parada es verdadero
-    public void algoritmoVegas() {
+    public int[][] algoritmoVegas() {
         while (!termino) {
             if (repite) {
                 for (int i = 0; i < tablero.length; i++) {
@@ -135,7 +135,7 @@ public class VegasTwo {
             System.out.println("Fracasos: " + fracasos);
             System.out.println("");
         }
-
+        return tablero;
     }
 
     //Metodo que busca la posicion x,y con menor cantidad de numeros posibles
@@ -276,17 +276,7 @@ public class VegasTwo {
             Integer p[] = {x, y - 1};
             lista.add(p);
 
-//            if (valorfichaA == valor) {
-//                Integer p[] = validarValor(x, y - 1, valorfichaB);
-//                if (p[2] != 0) {
-//                    lista.add(p);
-//                }
-//            } else {
-//                Integer p[] = validarValor(x, y - 1, valorfichaA);
-//                if (p[2] != 0) {
-//                    lista.add(p);
-//                }
-//            }
+
         }
         return lista;
     }
@@ -309,6 +299,7 @@ public class VegasTwo {
         return posiciones;
     }
 
+    //Metodo para imprimir las fichas
     public void verFichas(ArrayList<Ficha> fichas) {
         for (int i = 0; i < fichas.size(); i++) {
             System.out.print("Id: " + fichas.get(i).getId() + " " + fichas.get(i).getValorA() + ":" + fichas.get(i).getValorB() + " - ");
